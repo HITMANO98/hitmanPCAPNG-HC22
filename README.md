@@ -1,73 +1,360 @@
-#  Smart PCAPNG to HC22000 Converter (`pcapng2hc22000`)
+# ⚡ hitmanPCAPNG / HC22 Ultimate Suite
 
-An interactive Bash wrapper for `hcxpcapngtool` designed to rapidly convert `.pcapng`, `.pcap`, and `.cap` Wi-Fi captures into Hashcat `-m 22000` format. 
+> **Advanced Wireless Capture Processing & Auditing Suite**
 
-Built for penetration testers and security researchers who need fast, batch-processing workflows tailored for online cracking services and manual hash extraction.
+**hitmanPCAPNG-HC22** is an automated Linux CLI suite for processing, extracting, validating, auditing, and organizing wireless capture files.
 
----
-
-##  Features
-
--  **Interactive Multi-Selection**: Uses `fzf` for fuzzy multi-select menus. Automatically falls back to a numbered Bash menu if `fzf` isn't installed.
--  **Batch or Single Aggregation**: Convert files individually or merge extracted hashes into a single `.hc22000` file.
--  **Automated Recovery Pass**: Automatically detects files that yield `0` valid standard hashes and offers an aggressive retry pass using `--all --ignore-ie --nonce-error-corrections=8`.
--  **Metadata Extraction**: Optional extraction of ESSID lists (`-E`), Probe Requests (`-R`), Identities/Usernames (`-I`, `-U`), and Access Point CSV info (`--csv`).
--  **Gzip Compression Compatible**: Natively handles compressed `.gz` capture files without needing manual decompression.
+Built around the **hcxtools** ecosystem, it turns a directory full of `.pcap`, `.cap`, and `.pcapng` files into a streamlined automated workflow — from capture extraction and recovery through local auditing, cloud submission, notifications, result tracking, and archival.
 
 ---
 
-##  Prerequisites & Installation
+## 🚀 Features
 
-The script requires `hcxtools` (specifically `hcxpcapngtool`). `fzf` is optional but recommended for an interactive UI experience.
+### 🛡️ 3-Tier Aggressive Extraction Engine
 
-### Installing Dependencies by OS / Package Manager
+Progressive capture processing with multiple recovery levels:
 
-#### **Debian / Ubuntu / Kali Linux**
+| Pass       | Mode              | Purpose                                               |
+| ---------- | ----------------- | ----------------------------------------------------- |
+| **PASS 1** | Standard          | Fast processing of clean captures                     |
+| **PASS 2** | 8-bit Correction  | Recovery from noisy or weak captures                  |
+| **PASS 3** | 16-bit + Recovery | Maximum recovery of corrupted or incomplete exchanges |
+
+The engine automatically escalates through the recovery pipeline when necessary.
+
+---
+
+### 🔍 Quality Control & De-Duplication
+
+Automatically clean and normalize extracted results.
+
+* Invalid result filtering
+* BSSID / ESSID de-duplication
+* `hcxhashtool` integration
+* Duplicate prevention
+* Cleaner final datasets
+* Automated processing validation
+
+---
+
+### ☁️ Multi-Cloud Connectors
+
+Automated integration with supported external auditing and recovery platforms:
+
+* [WPA-SEC](https://wpa-sec.stanev.org)
+* [OnlineHashCrack](https://api.onlinehashcrack.com)
+* [PwnCrack](https://pwncrack.org)
+* [Hashmob](https://hashmob.net)
+* [WiGLE](https://wigle.net)
+
+Connectors can be configured through the built-in configuration manager.
+
+---
+
+### 👁️ Directory Watchdog
+
+Automatically detect and process new capture files as they appear.
+
+Powered by `inotifywait` when available, with an automatic polling fallback.
+
+Perfect for automated capture pipelines and workflows involving devices such as:
+
+* Pwnagotchi
+* WiFi Pineapple
+* Custom capture collectors
+* Wireless auditing stations
+
+```bash
+./hitman.sh --watch /root/captures/
+```
+
+---
+
+### ⚡ Local Quick-Audit Pre-Check
+
+Perform a local `hashcat` dictionary pre-check before external submission.
+
+Configurable wordlists allow you to prioritize frequently used dictionaries such as:
+
+```text
+rockyou.txt
+```
+
+This allows locally recoverable results to be identified before proceeding with additional processing.
+
+---
+
+### 🔔 Real-Time Notifications
+
+Keep track of long-running jobs with automated notifications.
+
+Supported integrations include:
+
+* Discord Webhooks
+* Telegram Bots
+* Successful result notifications
+* Batch completion notifications
+* Processing status alerts
+
+---
+
+### 📊 Master Results Database
+
+Automatically consolidate processed results into:
+
+```text
+hitman_master.csv
+```
+
+Processed captures are automatically organized into:
+
+```text
+./archived_pcaps/
+```
+
+Your workspace stays clean while maintaining a centralized record of processed results.
+
+---
+
+# 📋 Requirements
+
+### Required
+
+* Linux
+* Bash
+* `hcxtools`
+* `curl`
+* `jq`
+
+### Recommended
+
+* `hcxhashtool`
+* `hashcat`
+* `inotify-tools`
+
+---
+
+# 📦 Installation
+
+## Debian / Ubuntu / Kali / Parrot
+
 ```bash
 sudo apt update
-sudo apt install hcxtools fzf -y
+sudo apt install -y hcxtools curl jq hashcat inotify-tools
 ```
-#### **Arch Linux / Manjaro**
-```bash
-sudo pacman -S hcxtools fzf
-```
-#### **Fedora / RHEL**
-```bash
-sudo dnf install hcxtools fzf
-```
-**Building hcxtools from Source (Latest Version)**
 
-If your distribution's repository has an outdated package, you can build directly from upstream:
+## Arch Linux / Manjaro
+
 ```bash
-git clone https://github.com/ZerBea/hcxtools.git
-cd hcxtools
-make
-sudo make install
+sudo pacman -S hcxtools curl jq hashcat inotify-tools
 ```
-### **Quick Start**
+
+---
+
+# ⚙️ Setup
+
 Clone the repository:
+
 ```bash
-git clone https://github.com/HITMAN098/pcapng2hc22000.git
-cd pcapng2hc22000
+git clone https://github.com/HITMANO98/hitmanPCAPNG-HC22.git
+cd hitmanPCAPNG
 ```
+
 Make the script executable:
+
 ```bash
-chmod +x pcapng2hc22000.sh
+chmod +x hitman.sh
 ```
-Run the script:
 
-  Inside the directory containing your .pcapng files:
-  ```bash
-./pcapng2hc22000.sh
+Launch the configuration manager:
+
+```bash
+./hitman.sh --config
 ```
-  Or pass a target path as an argument:
-  ```bash
-./pcapng2hc22000.sh /path/to/captures/
+
+Configuration is stored at:
+
+```text
+~/.config/hitman_pcap/config.conf
 ```
-Huge thanks to [@ZerBea](https://github.com/ZerBea) for the massive work done on hcxtools/hcxdumptool.
 
+---
 
-**License**
+# 🕹️ Usage
 
-**This project is open-source and available under the MIT License.**
+## Interactive Mode
 
+Launch the main interface:
+
+```bash
+./hitman.sh
+```
+
+The interactive dashboard provides access to the suite's main processing and management functions.
+
+---
+
+## ⚡ Automated Mode
+
+Run the automated processing pipeline in the current directory:
+
+```bash
+./hitman.sh --auto
+```
+
+---
+
+## 👁️ Watch Mode
+
+Monitor a directory for incoming capture files:
+
+```bash
+./hitman.sh --watch /root/captures/
+```
+
+New captures are automatically detected and passed through the processing pipeline.
+
+---
+
+## ⚙️ Configuration
+
+Open the configuration manager:
+
+```bash
+./hitman.sh --config
+```
+
+---
+
+## ❓ Help
+
+Display the command-line reference:
+
+```bash
+./hitman.sh --help
+```
+
+---
+
+# 🖥️ Command-Line Reference
+
+| Option                | Description                                         | Example                               |
+| --------------------- | --------------------------------------------------- | ------------------------------------- |
+| `-a`, `--auto`        | Run the automated pipeline in the current directory | `./hitman.sh --auto`                  |
+| `-w`, `--watch [dir]` | Monitor a directory for new captures                | `./hitman.sh --watch /root/captures/` |
+| `-c`, `--config`      | Open the configuration manager                      | `./hitman.sh --config`                |
+| `-h`, `--help`        | Display the help menu                               | `./hitman.sh --help`                  |
+
+---
+
+# 🔄 Processing Pipeline
+
+```text
+ ┌──────────────────────────────┐
+ │        Capture Files         │
+ │    .pcap / .cap / .pcapng    │
+ └──────────────┬───────────────┘
+                │
+                ▼
+ ┌──────────────────────────────┐
+ │      Extraction Engine       │
+ │        hcxpcapngtool         │
+ └──────────────┬───────────────┘
+                │
+                ▼
+ ┌──────────────────────────────┐
+ │       Recovery Pipeline      │
+ │   PASS 1 → PASS 2 → PASS 3  │
+ └──────────────┬───────────────┘
+                │
+                ▼
+ ┌──────────────────────────────┐
+ │   Quality / De-Duplication   │
+ └──────────────┬───────────────┘
+                │
+                ▼
+ ┌──────────────────────────────┐
+ │     Local Quick-Audit        │
+ │          Optional            │
+ └──────────────┬───────────────┘
+                │
+       ┌────────┼────────┐
+       ▼        ▼        ▼
+    Local    Cloud     Master
+    Audit    APIs       CSV
+       │        │        │
+       └────────┼────────┘
+                │
+                ▼
+ ┌──────────────────────────────┐
+ │          Archiving           │
+ │       ./archived_pcaps/      │
+ └──────────────────────────────┘
+```
+
+---
+
+# 📂 Output
+
+| Path                                | Description               |
+| ----------------------------------- | ------------------------- |
+| `hitman_master.csv`                 | Master results database   |
+| `./archived_pcaps/`                 | Processed capture archive |
+| `~/.config/hitman_pcap/config.conf` | Application configuration |
+
+---
+
+# 🧰 Dependencies
+
+| Tool            | Function                          |
+| --------------- | --------------------------------- |
+| `hcxtools`      | Capture extraction and processing |
+| `hcxpcapngtool` | Capture-to-hash conversion        |
+| `hcxhashtool`   | Filtering and de-duplication      |
+| `hashcat`       | Local password auditing           |
+| `curl`          | API communication                 |
+| `jq`            | JSON processing                   |
+| `inotifywait`   | Real-time filesystem monitoring   |
+
+---
+
+# 🛣️ Roadmap
+
+* [ ] Enhanced terminal UI
+* [ ] Parallel capture processing
+* [ ] Advanced capture quality scoring
+* [ ] Expanded cloud connector support
+* [ ] Improved API retry handling
+* [ ] SQLite backend
+* [ ] Advanced result analytics
+* [ ] Additional export formats
+* [ ] Plugin-based connector system
+* [ ] Configuration import/export
+* [ ] Expanded logging and diagnostics
+* [ ] Automatic dependency detection
+
+---
+
+# 🙏 Credits
+
+Special thanks to **[@ZerBea](https://github.com/ZerBea)** and the contributors behind **hcxtools** and **hcxdumptool**.
+
+This project would not be possible without their extensive work in wireless capture processing and analysis.
+
+---
+
+# 📄 License
+
+**MIT License**
+
+---
+
+<div align="center">
+
+### ⚡ hitmanPCAPNG
+
+**Capture → Extract → Recover → Audit → Analyze → Archive**
+
+*Built for serious wireless security workflows.*
+
+</div>
