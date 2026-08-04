@@ -34,20 +34,20 @@ sudo pacman -S hcxtools fzf
 #### **Fedora / RHEL**
 ```bash
 sudo dnf install hcxtools fzf
-````
+```
 **Building hcxtools from Source (Latest Version)**
 
 If your distribution's repository has an outdated package, you can build directly from upstream:
 ```bash
-git clone [https://github.com/ZerBea/hcxtools.git](https://github.com/ZerBea/hcxtools.git)
+git clone https://github.com/ZerBea/hcxtools.git or [hcxtools repository](https://github.com/ZerBea/hcxtools)
 cd hcxtools
 make
 sudo make install
 ```
-###**Quick Start**
+### **Quick Start**
 Clone the repository:
 ```bash
-git clone [https://github.com/HITMAN098/pcapng2hc22000.git](https://github.com/HITMAN098/pcapng2hc22000.git)
+git clone https://github.com/HITMAN098/pcapng2hc22000.git
 cd pcapng2hc22000
 ```
 Make the script executable:
@@ -64,4 +64,4 @@ Run the script:
   ```bash
 ./pcapng2hc22000.sh /path/to/captures/
 ```
-
+Huge thanks to [@ZerBea](https://github.com/ZerBea) for the massive work done hcxtools/hcxdumptool.
