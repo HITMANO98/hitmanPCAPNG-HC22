@@ -39,7 +39,7 @@ sudo dnf install hcxtools fzf
 
 If your distribution's repository has an outdated package, you can build directly from upstream:
 ```bash
-git clone https://github.com/ZerBea/hcxtools.git or [hcxtools repository](https://github.com/ZerBea/hcxtools)
+git clone https://github.com/ZerBea/hcxtools.git
 cd hcxtools
 make
 sudo make install
@@ -64,4 +64,8 @@ Run the script:
   ```bash
 ./pcapng2hc22000.sh /path/to/captures/
 ```
-Huge thanks to [@ZerBea](https://github.com/ZerBea) for the massive work done hcxtools/hcxdumptool.
+Huge thanks to [@ZerBea](https://github.com/ZerBea) for the massive work done on hcxtools/hcxdumptool.
+**License**
+
+**This project is open-source and available under the MIT License.**
+
