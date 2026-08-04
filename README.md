@@ -146,7 +146,7 @@ Your workspace stays clean while maintaining a centralized record of processed r
 
 ### Required
 
-* Linux (Duh lol)
+* Linux (obviously)
 * Bash
 * `hcxtools`
 * `curl`
