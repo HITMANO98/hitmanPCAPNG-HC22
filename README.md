@@ -343,7 +343,6 @@ Display the command-line reference:
 
 Special thanks to **[@ZerBea](https://github.com/ZerBea)** and the contributors behind **hcxtools** and **hcxdumptool**.
 
-This project would not be possible without their extensive work in wireless capture processing and analysis.
 
 ---
 
