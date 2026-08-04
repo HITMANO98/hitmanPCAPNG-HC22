@@ -157,7 +157,7 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/HITMANO98/hitmanPCAPNG-HC22.git
-cd hitmanPCAPNG
+cd hitmanPCAPNG-HC22
 ```
 
 Make the script executable:
