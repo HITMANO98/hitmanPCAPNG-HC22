@@ -18,9 +18,9 @@ Built around the **hcxtools** ecosystem, it turns a directory full of `.pcap`, `
 ---
 
 ## 🖥️ Interface 
-![HC22 Dashboard](assets/menu.png)
+![HC22 Dashboard](assets/menu1.png)
 
-HC22 provides a terminal-based interactive dashboard for managing the complete capture-processing workflow.
+It provides a terminal-based interactive dashboard for managing the complete capture-processing workflow
 
 ```text
 ⚡ 1-Click Express Pipeline
