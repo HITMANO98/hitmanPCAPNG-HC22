@@ -2,10 +2,6 @@
 ![Shell](https://img.shields.io/badge/shell-Bash-green?logo=gnubash)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Status](https://img.shields.io/badge/status-active-success)
-![Platform](https://img.shields.io/badge/platform-Linux-black?logo=linux)
-![Shell](https://img.shields.io/badge/shell-Bash-green?logo=gnubash)
-![License](https://img.shields.io/badge/license-MIT-blue)
-![Status](https://img.shields.io/badge/status-active-success)
 
 # ⚡ hitmanPCAPNG / HC22 Ultimate Suite
 
