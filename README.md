@@ -2,6 +2,11 @@
 ![Shell](https://img.shields.io/badge/shell-Bash-green?logo=gnubash)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Status](https://img.shields.io/badge/status-active-success)
+![Platform](https://img.shields.io/badge/platform-Linux-black?logo=linux)
+![Shell](https://img.shields.io/badge/shell-Bash-green?logo=gnubash)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Status](https://img.shields.io/badge/status-active-success)
+
 # ⚡ hitmanPCAPNG / HC22 Ultimate Suite
 
 > **Advanced Wireless Capture Processing & Auditing Suite**
@@ -9,6 +14,27 @@
 **hitmanPCAPNG-HC22** is an automated Linux CLI suite for processing, extracting, validating, auditing, and organizing wireless capture files.
 
 Built around the **hcxtools** ecosystem, it turns a directory full of `.pcap`, `.cap`, and `.pcapng` files into a streamlined automated workflow — from capture extraction and recovery through local auditing, cloud submission, notifications, result tracking, and archival.
+
+---
+
+## 🖥️ Interface 
+![HC22 Dashboard](assets/menu.png)
+
+HC22 provides a terminal-based interactive dashboard for managing the complete capture-processing workflow.
+
+```text
+⚡ 1-Click Express Pipeline
+👁 Directory Watchdog
+🛠 Custom Workflow Builder
+📂 Capture File Inspector
+⚙ Settings / API Keys / Webhooks
+```
+
+Launch the interface with:
+
+```bash
+./hitman.sh
+```
 
 ---
 
@@ -61,7 +87,7 @@ Automatically detect and process new capture files as they appear.
 
 Powered by `inotifywait` when available, with an automatic polling fallback.
 
-Perfect for automated capture pipelines and workflows involving devices such as:
+Designed for automated capture pipelines and workflows involving:
 
 * Pwnagotchi
 * WiFi Pineapple
@@ -188,13 +214,21 @@ Configuration is stored at:
 
 ## Interactive Mode
 
-Launch the main interface:
+Launch the main HC22 dashboard:
 
 ```bash
 ./hitman.sh
 ```
 
-The interactive dashboard provides access to the suite's main processing and management functions.
+The interactive interface provides access to the complete suite:
+
+| Mode                    | Description                                    |
+| ----------------------- | ---------------------------------------------- |
+| ⚡ **Express Pipeline**  | Automated capture processing workflow          |
+| 👁 **Watchdog**         | Automatically process newly detected captures  |
+| 🛠 **Workflow Builder** | Select files and control individual services   |
+| 📂 **File Inspector**   | Inspect capture and HC22000 files              |
+| ⚙ **Configuration**     | Manage APIs, webhooks, and automation settings |
 
 ---
 
@@ -291,7 +325,7 @@ Display the command-line reference:
                 │
                 ▼
  ┌──────────────────────────────┐
- │          Archiving           │
+ │          Archiving            │
  │       ./archived_pcaps/      │
  └──────────────────────────────┘
 ```
@@ -322,9 +356,43 @@ Display the command-line reference:
 
 ---
 
+# 🧠 Architecture
+
+HC22 is built around a progressive processing pipeline:
+
+```text
+Capture
+   │
+   ▼
+Extraction
+   │
+   ├── PASS 1 — Standard
+   │
+   ├── PASS 2 — 8-bit Correction
+   │
+   └── PASS 3 — 16-bit + Recovery
+   │
+   ▼
+Quality Control
+   │
+   ▼
+De-Duplication
+   │
+   ├──────────────┬──────────────┐
+   ▼              ▼              ▼
+Local Audit   Cloud APIs    Master CSV
+   │              │              │
+   └──────────────┴──────────────┘
+                  │
+                  ▼
+               Archive
+```
+
+---
+
 # 🛣️ Roadmap
 
-* [ ] Enhanced terminal UI
+* [x] Enhanced terminal UI
 * [ ] Parallel capture processing
 * [ ] Advanced capture quality scoring
 * [ ] Expanded cloud connector support
@@ -342,7 +410,6 @@ Display the command-line reference:
 # 🙏 Credits
 
 Special thanks to **[@ZerBea](https://github.com/ZerBea)** and the contributors behind **hcxtools** and **hcxdumptool**.
-
 
 ---
 
