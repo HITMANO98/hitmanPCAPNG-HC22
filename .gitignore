@@ -1,0 +1,20 @@
+# Credentials & Configuration
+.config/
+config.conf
+*.conf
+
+# Logs & Local Databases
+*.log
+hitman_master.csv
+
+# Working & Output Hashes
+*.hc22000
+temp_raw.*
+*.potfile
+
+# Archives
+/archived_pcaps/
+
+# OS Specific Junk
+.DS_Store
+Thumbs.db
